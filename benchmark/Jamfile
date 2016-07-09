@@ -1,0 +1,11 @@
+project 
+        : requirements <library>..//gperftools 
+                       <library>..//profile 
+                       <source>run_benchmark.c
+                       <optimization>speed <variant>release
+        #: default-build release
+;
+
+run binary_trees.cc ;
+run malloc_bench.cc ;
+

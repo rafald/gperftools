@@ -1,0 +1,18 @@
+project 
+        : usage-requirements 
+             <include>include <cxxflags>"-std=c++11 " # threading is not-free so can not be specified here
+        : requirements 
+             <include>include <cxxflags>"-std=c++11 " <threading>multi
+             <include>src <optimization>speed <variant>release # <toolset>gcc-5 
+        #: default-build release
+        : source-location src
+        : build-dir build~
+;
+
+lib gperftools :       [ glob *.cc base/*.cc base/*.c : profile*.cc debugallocation.cc ] ;
+lib gperftools_debug : [ glob *.cc base/*.cc base/*.c : profile*.cc tcmalloc.cc ] ;
+lib profile : [ glob profile*.cc ] ;
+
+build-project benchmark ;
+build-project src/tests ;
+

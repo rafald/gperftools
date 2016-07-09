@@ -1,0 +1,48 @@
+project
+        : requirements  
+            <library>../..//gperftools
+            <library>../..//profile
+	    <source>testutil.cc
+;
+
+import feature ; 
+rule set-env-var ( properties * ) 
+  { 
+      local v = [ feature.get-values <variant> : $(properties) ] ; 
+      return <testing.launcher>TCMALLOC_SAMPLE_PARAMETER=524288/$(v) ; 
+  } 
+
+run malloc_extension_c_test.c ;
+
+run addressmap_unittest.cc ;
+run atomicops_unittest.cc ;
+run current_allocated_bytes_test.cc ;
+#run debugallocation_test.cc ;
+run frag_unittest.cc ;
+run getpc_test.cc ;
+run heap-checker_unittest.cc ;
+run heap-profiler_unittest.cc ;
+run large_heap_fragmentation_unittest.cc ;
+run low_level_alloc_unittest.cc ;
+run malloc_extension_test.cc ;
+run malloc_hook_test.cc ;
+run markidle_unittest.cc ;
+run memalign_unittest.cc ;
+run packed-cache_test.cc ;
+run page_heap_test.cc ;
+run pagemap_unittest.cc ;
+run profiledata_unittest.cc ;
+run profile-handler_unittest.cc ;
+run profiler_unittest.cc : 100 1 /tmp ;
+run raw_printer_test.cc ;
+run realloc_unittest.cc ;
+run sampler_test.cc ;
+run sampling_test.cc : ../../build~/profile : : <conditional>@set-env-var ;
+run simple_compat_test.cc ;
+run stack_trace_table_test.cc ;
+#run stacktrace_unittest.cc : : : <variant>debug <optimization>off ;
+run system-alloc_unittest.cc ;
+run tcmalloc_large_unittest.cc ;
+#run tcmalloc_unittest.cc ;
+#run testutil.cc ;
+run thread_dealloc_unittest.cc ;
